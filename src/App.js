@@ -2,48 +2,58 @@ import React, { useState } from 'react';
 import './App.css';
 import StudentList from './components/StudentList';
 import CourseList from './components/CourseList';
+import EnrollmentList from './components/EnrollmentList';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('students');
+  const [activeTab, setActiveTab] = useState('enrollments');
 
   return (
     <div className="App">
-      <header style={{ backgroundColor: '#282c34', padding: '20px', color: 'white' }}>
-        <h1>Sistema de Gestión Estudiantes - Cursos</h1>
+      <header className="app-header">
+        <div className="header-content">
+          <div className="logo">
+            <span className="logo-icon">🎓</span>
+            <h1>Sistema Académico</h1>
+          </div>
+          <p className="subtitle">Gestión de Estudiantes y Cursos</p>
+        </div>
       </header>
       
-      <div style={{ padding: '20px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <nav className="navigation">
+        <div className="nav-container">
+          <button
+            onClick={() => setActiveTab('enrollments')}
+            className={activeTab === 'enrollments' ? 'nav-btn active' : 'nav-btn'}
+          >
+            <span className="nav-icon">📋</span>
+            Matrículas
+          </button>
           <button
             onClick={() => setActiveTab('students')}
-            style={{
-              padding: '10px 20px',
-              margin: '5px',
-              backgroundColor: activeTab === 'students' ? '#61dafb' : '#ccc',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '16px'
-            }}
+            className={activeTab === 'students' ? 'nav-btn active' : 'nav-btn'}
           >
+            <span className="nav-icon">👨‍🎓</span>
             Estudiantes
           </button>
           <button
             onClick={() => setActiveTab('courses')}
-            style={{
-              padding: '10px 20px',
-              margin: '5px',
-              backgroundColor: activeTab === 'courses' ? '#61dafb' : '#ccc',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '16px'
-            }}
+            className={activeTab === 'courses' ? 'nav-btn active' : 'nav-btn'}
           >
+            <span className="nav-icon">📚</span>
             Cursos
           </button>
         </div>
+      </nav>
 
-        {activeTab === 'students' ? <StudentList /> : <CourseList />}
-      </div>
+      <main className="main-content">
+        {activeTab === 'enrollments' && <EnrollmentList />}
+        {activeTab === 'students' && <StudentList />}
+        {activeTab === 'courses' && <CourseList />}
+      </main>
+
+      <footer className="app-footer">
+        <p>Sistema de Gestión Académica - TECSUP 2025</p>
+      </footer>
     </div>
   );
 }

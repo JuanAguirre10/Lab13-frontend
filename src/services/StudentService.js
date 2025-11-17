@@ -22,14 +22,6 @@ class StudentService {
     deleteStudent(id) {
         return axios.delete(`${API_URL}/${id}`);
     }
-
-    enrollInCourse(studentId, courseId) {
-        return axios.post(`${API_URL}/${studentId}/courses/${courseId}`);
-    }
-
-    removeFromCourse(studentId, courseId) {
-        return axios.delete(`${API_URL}/${studentId}/courses/${courseId}`);
-    }
 }
 
 export default new StudentService();

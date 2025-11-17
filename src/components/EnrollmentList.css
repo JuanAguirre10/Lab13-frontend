@@ -1,0 +1,91 @@
+.enrollment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.select-enrollment {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.filter-btn.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.badge-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.badge-completed {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.badge-dropped {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.student-info, .course-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.student-info strong, .course-info strong {
+    font-size: 14px;
+}
+
+.student-info small, .course-info small {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.grade {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.grade-pass {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.grade-fail {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.no-grade {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 12px;
+}
