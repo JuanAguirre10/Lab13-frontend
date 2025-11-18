@@ -1,70 +1,180 @@
-# Getting Started with Create React App
+# Sistema de Gestión Académica - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicación web desarrollada con React para la gestión de estudiantes, cursos y matrículas con interfaz moderna y responsive.
 
-## Available Scripts
+## 🚀 Tecnologías
 
-In the project directory, you can run:
+- **React 18**
+- **Axios**
+- **CSS3**
+- **JavaScript ES6+**
 
-### `npm start`
+## 🎨 Características
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- ✅ Interfaz moderna y responsive
+- ✅ Gestión completa de Estudiantes
+- ✅ Gestión completa de Cursos
+- ✅ Sistema de Matrículas interactivo
+- ✅ Filtrado de matrículas por estado
+- ✅ Actualización de calificaciones en tiempo real
+- ✅ Diseño profesional con animaciones
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📱 Capturas
 
-### `npm test`
+### Módulo de Matrículas
+- Vista de todas las matrículas
+- Filtros por estado (Activo, Completado, Retirado)
+- Crear nuevas matrículas
+- Actualizar estado y calificaciones
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Módulo de Estudiantes
+- Lista de estudiantes con código único
+- Crear, editar y eliminar estudiantes
+- Ver cantidad de cursos inscritos
 
-### `npm run build`
+### Módulo de Cursos
+- Lista de cursos con créditos
+- Crear, editar y eliminar cursos
+- Ver cantidad de estudiantes matriculados
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🔧 Instalación Local
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerrequisitos
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js 14+
+- npm o yarn
 
-### `npm run eject`
+### Pasos
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/JuanAguirre10/Lab13-frontend.git
+cd Lab13-frontend
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Instalar dependencias**
+```bash
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Configurar la URL del backend**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Editar los archivos de servicios en `src/services/`:
 
-## Learn More
+**StudentService.js, CourseService.js, EnrollmentService.js:**
+```javascript
+const API_URL = 'http://localhost:8081/api/students'; // Para desarrollo local
+// const API_URL = 'https://lab13-student-course-api.onrender.com/api/students'; // Para producción
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Ejecutar en modo desarrollo**
+```bash
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+La aplicación estará disponible en: `http://localhost:3000`
 
-### Code Splitting
+5. **Compilar para producción**
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📂 Estructura del Proyecto
+```
+src/
+├── components/
+│   ├── StudentList.js         # Componente de estudiantes
+│   ├── StudentList.css
+│   ├── CourseList.js          # Componente de cursos
+│   ├── CourseList.css
+│   ├── EnrollmentList.js      # Componente de matrículas
+│   └── EnrollmentList.css
+├── services/
+│   ├── StudentService.js      # API de estudiantes
+│   ├── CourseService.js       # API de cursos
+│   └── EnrollmentService.js   # API de matrículas
+├── App.js                     # Componente principal
+├── App.css                    # Estilos globales
+└── index.js                   # Punto de entrada
+```
 
-### Analyzing the Bundle Size
+## 🎯 Funcionalidades Principales
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 1. Gestión de Estudiantes
+- ➕ Crear estudiante con código, nombre, apellido y email
+- ✏️ Editar información del estudiante
+- 🗑️ Eliminar estudiante
+- 📊 Ver cursos inscritos
 
-### Making a Progressive Web App
+### 2. Gestión de Cursos
+- ➕ Crear curso con código, nombre, descripción y créditos
+- ✏️ Editar información del curso
+- 🗑️ Eliminar curso
+- 📊 Ver estudiantes matriculados
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 3. Sistema de Matrículas
+- ➕ Matricular estudiante en curso
+- 🔄 Cambiar estado (Activo/Completado/Retirado)
+- 📝 Registrar calificaciones
+- 🔍 Filtrar por estado
+- 🗑️ Eliminar matrícula
 
-### Advanced Configuration
+## 🌐 Despliegue en Render
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+La aplicación está desplegada en: **https://lab13-frontend.onrender.com**
 
-### Deployment
+### Configuración de Despliegue
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+**Build Command:**
+```bash
+npm install && npm run build
+```
 
-### `npm run build` fails to minify
+**Publish Directory:**
+```
+build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🎨 Paleta de Colores
+
+- **Primario:** `#667eea` (Morado)
+- **Secundario:** `#764ba2` (Morado oscuro)
+- **Éxito:** `#d4edda` (Verde claro)
+- **Alerta:** `#fff3cd` (Amarillo)
+- **Error:** `#f8d7da` (Rojo claro)
+- **Fondo:** `#f5f6fa` (Gris claro)
+
+## 🔌 Conexión con el Backend
+
+El frontend se comunica con el backend mediante Axios:
+```javascript
+// Ejemplo de petición GET
+StudentService.getAllStudents().then(response => {
+    setStudents(response.data);
+});
+
+// Ejemplo de petición POST
+StudentService.createStudent(formData).then(response => {
+    console.log('Estudiante creado:', response.data);
+});
+```
+
+## 📱 Responsive Design
+
+La aplicación está optimizada para:
+- 💻 Desktop (>1024px)
+- 📱 Tablet (768px - 1024px)
+- 📱 Mobile (<768px)
+
+## 🔄 Estados de Matrícula
+
+| Estado | Descripción | Color |
+|--------|-------------|-------|
+| **ACTIVE** | Matrícula activa | Verde |
+| **COMPLETED** | Curso completado | Azul |
+| **DROPPED** | Estudiante retirado | Rojo |
+
+## 👥 Autor
+
+**Juan Aguirre**
+- GitHub: [@JuanAguirre10](https://github.com/JuanAguirre10)
