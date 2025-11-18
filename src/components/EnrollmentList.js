@@ -14,6 +14,9 @@ function EnrollmentList() {
     const [editMode, setEditMode] = useState(false);
     const [editEnrollment, setEditEnrollment] = useState(null);
     const [filter, setFilter] = useState('all');
+    
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10);
 
     useEffect(() => {
         loadData();
@@ -46,8 +49,7 @@ function EnrollmentList() {
         if (editEnrollment) {
             EnrollmentService.updateEnrollment(editEnrollment.id, editEnrollment).then(() => {
                 loadData();
-                setEditMode(false);
-                setEditEnrollment(null);
+                cancelEdit();
             });
         }
     };
@@ -63,12 +65,19 @@ function EnrollmentList() {
     const openEditMode = (enrollment) => {
         setEditEnrollment({ ...enrollment });
         setEditMode(true);
+        setShowForm(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const resetForm = () => {
         setSelectedStudent('');
         setSelectedCourse('');
         setShowForm(false);
+    };
+
+    const cancelEdit = () => {
+        setEditMode(false);
+        setEditEnrollment(null);
     };
 
     const getStatusBadge = (status) => {
@@ -86,21 +95,33 @@ function EnrollmentList() {
         return e.status === filter;
     });
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentEnrollments = filteredEnrollments.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredEnrollments.length / itemsPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <div className="container">
             <div className="header">
                 <h2>Sistema de Matrículas</h2>
-                <button className="btn-primary" onClick={() => setShowForm(!showForm)}>
-                    {showForm ? 'Cancelar' : '+ Nueva Matrícula'}
-                </button>
+                {!showForm && !editMode && (
+                    <button className="btn-primary" onClick={() => setShowForm(true)}>
+                        + Nueva Matrícula
+                    </button>
+                )}
             </div>
 
             {showForm && (
-                <div className="card">
-                    <h3>Nueva Matrícula</h3>
+                <div className="card form-card">
+                    <div className="form-header">
+                        <h3>➕ Nueva Matrícula</h3>
+                        <button className="btn-close" onClick={resetForm}>✖</button>
+                    </div>
                     <div className="enrollment-form">
                         <div className="form-group">
-                            <label>Seleccionar Estudiante</label>
+                            <label>Seleccionar Estudiante *</label>
                             <select
                                 value={selectedStudent}
                                 onChange={(e) => setSelectedStudent(e.target.value)}
@@ -115,7 +136,7 @@ function EnrollmentList() {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label>Seleccionar Curso</label>
+                            <label>Seleccionar Curso *</label>
                             <select
                                 value={selectedCourse}
                                 onChange={(e) => setSelectedCourse(e.target.value)}
@@ -138,7 +159,7 @@ function EnrollmentList() {
                                 onClick={handleEnroll}
                                 disabled={!selectedStudent || !selectedCourse}
                             >
-                                Matricular
+                                💾 Matricular
                             </button>
                         </div>
                     </div>
@@ -146,12 +167,26 @@ function EnrollmentList() {
             )}
 
             {editMode && editEnrollment && (
-                <div className="card">
-                    <h3>Actualizar Matrícula</h3>
+                <div className="card form-card edit-card">
+                    <div className="form-header">
+                        <h3>✏️ Actualizar Matrícula</h3>
+                        <button className="btn-close" onClick={cancelEdit}>✖</button>
+                    </div>
                     <div className="enrollment-form">
+                        <div className="edit-info">
+                            <div className="info-item">
+                                <strong>Estudiante:</strong> {editEnrollment.student?.firstName} {editEnrollment.student?.lastName} ({editEnrollment.student?.code})
+                            </div>
+                            <div className="info-item">
+                                <strong>Curso:</strong> {editEnrollment.course?.name} ({editEnrollment.course?.code})
+                            </div>
+                            <div className="info-item">
+                                <strong>Fecha Matrícula:</strong> {editEnrollment.enrollmentDate}
+                            </div>
+                        </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label>Estado</label>
+                                <label>Estado *</label>
                                 <select
                                     value={editEnrollment.status}
                                     onChange={(e) => setEditEnrollment({ ...editEnrollment, status: e.target.value })}
@@ -175,11 +210,11 @@ function EnrollmentList() {
                             </div>
                         </div>
                         <div className="form-actions">
-                            <button className="btn-secondary" onClick={() => { setEditMode(false); setEditEnrollment(null); }}>
+                            <button className="btn-secondary" onClick={cancelEdit}>
                                 Cancelar
                             </button>
                             <button className="btn-primary" onClick={handleUpdateGrade}>
-                                Guardar Cambios
+                                💾 Guardar Cambios
                             </button>
                         </div>
                     </div>
@@ -190,28 +225,32 @@ function EnrollmentList() {
                 <div className="filters">
                     <button 
                         className={filter === 'all' ? 'filter-btn active' : 'filter-btn'}
-                        onClick={() => setFilter('all')}
+                        onClick={() => { setFilter('all'); setCurrentPage(1); }}
                     >
                         Todas ({enrollments.length})
                     </button>
                     <button 
                         className={filter === 'ACTIVE' ? 'filter-btn active' : 'filter-btn'}
-                        onClick={() => setFilter('ACTIVE')}
+                        onClick={() => { setFilter('ACTIVE'); setCurrentPage(1); }}
                     >
                         Activas ({enrollments.filter(e => e.status === 'ACTIVE').length})
                     </button>
                     <button 
                         className={filter === 'COMPLETED' ? 'filter-btn active' : 'filter-btn'}
-                        onClick={() => setFilter('COMPLETED')}
+                        onClick={() => { setFilter('COMPLETED'); setCurrentPage(1); }}
                     >
                         Completadas ({enrollments.filter(e => e.status === 'COMPLETED').length})
                     </button>
                     <button 
                         className={filter === 'DROPPED' ? 'filter-btn active' : 'filter-btn'}
-                        onClick={() => setFilter('DROPPED')}
+                        onClick={() => { setFilter('DROPPED'); setCurrentPage(1); }}
                     >
                         Retiradas ({enrollments.filter(e => e.status === 'DROPPED').length})
                     </button>
+                </div>
+
+                <div className="pagination-info">
+                    Mostrando {indexOfFirstItem + 1} - {Math.min(indexOfLastItem, filteredEnrollments.length)} de {filteredEnrollments.length} matrículas
                 </div>
 
                 <div className="table-container">
@@ -229,14 +268,14 @@ function EnrollmentList() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredEnrollments.length === 0 ? (
+                            {currentEnrollments.length === 0 ? (
                                 <tr>
                                     <td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>
                                         No hay matrículas registradas
                                     </td>
                                 </tr>
                             ) : (
-                                filteredEnrollments.map(enrollment => (
+                                currentEnrollments.map(enrollment => (
                                     <tr key={enrollment.id}>
                                         <td>#{enrollment.id}</td>
                                         <td>
@@ -281,6 +320,36 @@ function EnrollmentList() {
                         </tbody>
                     </table>
                 </div>
+
+                {totalPages > 1 && (
+                    <div className="pagination">
+                        <button 
+                            onClick={() => paginate(currentPage - 1)} 
+                            disabled={currentPage === 1}
+                            className="pagination-btn"
+                        >
+                            ← Anterior
+                        </button>
+                        
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index + 1}
+                                onClick={() => paginate(index + 1)}
+                                className={currentPage === index + 1 ? 'pagination-btn active' : 'pagination-btn'}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                        
+                        <button 
+                            onClick={() => paginate(currentPage + 1)} 
+                            disabled={currentPage === totalPages}
+                            className="pagination-btn"
+                        >
+                            Siguiente →
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

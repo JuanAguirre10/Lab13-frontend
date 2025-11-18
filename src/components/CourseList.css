@@ -2,3 +2,96 @@
     background-color: #fff3cd;
     color: #856404;
 }
+.pagination-info {
+    margin-bottom: 15px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+    padding: 15px 0;
+}
+
+.pagination-btn {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #495057;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s;
+    min-width: 40px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.pagination-btn.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.pagination-btn:disabled {
+    background-color: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+    border-color: #dee2e6;
+}
+.form-card {
+    border-left: 4px solid #3498db;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.form-header h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 22px;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #95a5a6;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-close:hover {
+    color: #e74c3c;
+}
